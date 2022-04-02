@@ -1,0 +1,24 @@
+#ifndef __COMMON__VERSION__H__
+#define __COMMON__VERSION__H__
+
+
+/**
+ *
+ * 作者: hm
+ *
+ * 说明: 版本
+ *
+ */
+
+
+#include "function.h"
+
+
+#define TOOLKIT_VERSION TOOLKIT_VERSION_NUMBER(TOOLKIT_VERSION_MAJOR, TOOLKIT_VERSION_MINOR, TOOLKIT_VERSION_PATCH)
+
+#define TOOLKIT_VERSION_MAJOR 0
+#define TOOLKIT_VERSION_MINOR 0
+#define TOOLKIT_VERSION_PATCH 1
+
+
+#endif // __COMMON__VERSION__H__
