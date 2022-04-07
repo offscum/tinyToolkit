@@ -21,11 +21,18 @@
   * Windows
   * OracleLinux
 
+# 选项
+
+  * BUILD_TEST
+    - 描述: 编译单元测试用例
+    - 使用: -DBUILD_TEST={ON|OFF}
+    - 默认: 启用
+
 # 安装
 
   ```shell
   # 生成
-  cmake . -B build
+  cmake . -B build [-DBUILD_TEST={ON|OFF}]
   # 编译
   cmake --build build
   # 安装

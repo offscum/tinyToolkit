@@ -55,6 +55,25 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/source)
 
 
 #
+# 选项
+#
+OPTION(BUILD_TEST "Build test" ON)
+
+
+#
+# 是否编译单元测试代码
+#
+IF (BUILD_TEST)
+
+	#
+	# 添加子目录
+	#
+	ADD_SUBDIRECTORY(test)
+
+ENDIF()
+
+
+#
 # 添加子目录
 #
 ADD_SUBDIRECTORY(source)
