@@ -1,0 +1,137 @@
+/**
+ *
+ * 作者: hm
+ *
+ * 说明: sha256
+ *
+ */
+
+
+#include "sha256.h"
+
+
+TOOLKIT_TEST_CASE(SHA256, Char)
+{
+	std::vector<std::string> src{ "123", "abc", ";'.", "#$%" };
+	std::vector<std::string> dst
+	{
+		"A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3",
+		"DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80",
+		"1FBE61A2A1767679725BF110B57691802F3178DB68C13E0550DFE02F827FC86B",
+		"255EEE14C0342567C34D919853948C9BEC5DBE244982D92F82C1ABB2977AB4B1"
+	};
+
+	tinyToolkit::hash::SHA256 handle{ };
+
+	for (std::size_t i = 0; i < 4; ++i)
+	{
+		handle.Append(src[i].c_str());
+
+		TOOLKIT_EXPECT_STR_EQ(handle.Result(), dst[i]);
+	}
+}
+
+TOOLKIT_TEST_CASE(SHA256, UChar)
+{
+	std::vector<std::string> src{ "123", "abc", ";'.", "#$%" };
+	std::vector<std::string> dst
+	{
+		"A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3",
+		"DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80",
+		"1FBE61A2A1767679725BF110B57691802F3178DB68C13E0550DFE02F827FC86B",
+		"255EEE14C0342567C34D919853948C9BEC5DBE244982D92F82C1ABB2977AB4B1"
+	};
+
+	tinyToolkit::hash::SHA256 handle{ };
+
+	for (std::size_t i = 0; i < 4; ++i)
+	{
+		handle.Append(reinterpret_cast<const uint8_t *>(src[i].c_str()));
+
+		TOOLKIT_EXPECT_STR_EQ(handle.Result(), dst[i]);
+	}
+}
+
+TOOLKIT_TEST_CASE(SHA256, String)
+{
+	std::vector<std::string> src{ "123", "abc", ";'.", "#$%" };
+	std::vector<std::string> dst
+	{
+		"A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3",
+		"DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80",
+		"1FBE61A2A1767679725BF110B57691802F3178DB68C13E0550DFE02F827FC86B",
+		"255EEE14C0342567C34D919853948C9BEC5DBE244982D92F82C1ABB2977AB4B1"
+	};
+
+	tinyToolkit::hash::SHA256 handle{ };
+
+	for (std::size_t i = 0; i < 4; ++i)
+	{
+		handle.Append(src[i]);
+
+		TOOLKIT_EXPECT_STR_EQ(handle.Result(), dst[i]);
+	}
+}
+
+TOOLKIT_TEST_CASE(SHA256, Char_Length)
+{
+	std::vector<std::string> src{ "123456", "abcdef", ";'.,/]", "#$%^&*" };
+	std::vector<std::string> dst
+	{
+		"A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3",
+		"DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80",
+		"1FBE61A2A1767679725BF110B57691802F3178DB68C13E0550DFE02F827FC86B",
+		"255EEE14C0342567C34D919853948C9BEC5DBE244982D92F82C1ABB2977AB4B1"
+	};
+
+	tinyToolkit::hash::SHA256 handle{ };
+
+	for (std::size_t i = 0; i < 4; ++i)
+	{
+		handle.Append(src[i].c_str(), 3);
+
+		TOOLKIT_EXPECT_STR_EQ(handle.Result(), dst[i]);
+	}
+}
+
+TOOLKIT_TEST_CASE(SHA256, UChar_Length)
+{
+	std::vector<std::string> src{ "123456", "abcdef", ";'.,/]", "#$%^&*" };
+	std::vector<std::string> dst
+	{
+		"A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3",
+		"DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80",
+		"1FBE61A2A1767679725BF110B57691802F3178DB68C13E0550DFE02F827FC86B",
+		"255EEE14C0342567C34D919853948C9BEC5DBE244982D92F82C1ABB2977AB4B1"
+	};
+
+	tinyToolkit::hash::SHA256 handle{ };
+
+	for (std::size_t i = 0; i < 4; ++i)
+	{
+		handle.Append(reinterpret_cast<const uint8_t *>(src[i].c_str()), 3);
+
+		TOOLKIT_EXPECT_STR_EQ(handle.Result(), dst[i]);
+	}
+}
+
+TOOLKIT_TEST_CASE(SHA256, String_Length)
+{
+	std::vector<std::string> src{ "123456", "abcdef", ";'.,/]", "#$%^&*" };
+	std::vector<std::string> dst
+	{
+		"A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3",
+		"DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80",
+		"1FBE61A2A1767679725BF110B57691802F3178DB68C13E0550DFE02F827FC86B",
+		"255EEE14C0342567C34D919853948C9BEC5DBE244982D92F82C1ABB2977AB4B1"
+	};
+
+	tinyToolkit::hash::SHA256 handle{ };
+
+	for (std::size_t i = 0; i < 4; ++i)
+	{
+		handle.Append(src[i], 3);
+
+		TOOLKIT_EXPECT_STR_EQ(handle.Result(), dst[i]);
+	}
+}
