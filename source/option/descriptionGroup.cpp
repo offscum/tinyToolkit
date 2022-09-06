@@ -52,9 +52,9 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 选项组
+		 * 描述信息组
 		 *
-		 * @return 选项组
+		 * @return 描述信息组
 		 *
 		 */
 		const std::vector<std::shared_ptr<Description>> & DescriptionGroup::Descriptions() const

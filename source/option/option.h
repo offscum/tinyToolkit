@@ -32,6 +32,17 @@ namespace tinyToolkit
 			 * @param separator 分隔符
 			 *
 			 */
+			void Parse(int32_t argc, char * argv[], const char * separator = "=");
+
+			/**
+			 *
+			 * 解析
+			 *
+			 * @param argc 选项个数
+			 * @param argv 选项数组
+			 * @param separator 分隔符
+			 *
+			 */
 			void Parse(int32_t argc, const char * argv[], const char * separator = "=");
 
 			/**

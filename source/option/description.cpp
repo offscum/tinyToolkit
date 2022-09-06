@@ -219,9 +219,9 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 名称
+		 * 全长名称
 		 *
-		 * @return 名称
+		 * @return 全长名称
 		 *
 		 */
 		const std::string & Description::LongName() const
@@ -231,9 +231,9 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 名称
+		 * 缩略名称
 		 *
-		 * @return 名称
+		 * @return 缩略名称
 		 *
 		 */
 		const std::string & Description::ShortName() const
@@ -243,9 +243,9 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 名称
+		 * 选项名称
 		 *
-		 * @return 名称
+		 * @return 选项名称
 		 *
 		 */
 		const std::string & Description::OptionName() const

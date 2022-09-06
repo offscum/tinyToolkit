@@ -68,7 +68,7 @@ namespace tinyToolkit
 		};
 
 		template <typename ValueType>
-		class TOOLKIT_API ActualValue : public BasicValue
+		class TOOLKIT_API ActualValue final : public BasicValue
 		{
 		public:
 			/**
@@ -200,7 +200,7 @@ namespace tinyToolkit
 			 *
 			 * @param content 内容
 			 *
-			 * @return 结果
+			 * @return 字符串
 			 *
 			 */
 			template <typename ContentType>
@@ -219,7 +219,7 @@ namespace tinyToolkit
 			 *
 			 * @param content 内容
 			 *
-			 * @return 结果
+			 * @return 字符串
 			 *
 			 */
 			template <typename ContentType>
@@ -249,7 +249,7 @@ namespace tinyToolkit
 			 *
 			 * @param content 内容
 			 *
-			 * @return 结果
+			 * @return 字符串
 			 *
 			 */
 			template <typename ContentType>

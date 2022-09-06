@@ -27,6 +27,20 @@ namespace tinyToolkit
 		 * @param separator 分隔符
 		 *
 		 */
+		void Option::Parse(int argc, char * argv[], const char * separator)
+		{
+			Parse(argc, const_cast<const char **>(argv), separator);
+		}
+
+		/**
+		 *
+		 * 解析
+		 *
+		 * @param argc 选项个数
+		 * @param argv 选项数组
+		 * @param separator 分隔符
+		 *
+		 */
 		void Option::Parse(int argc, const char * argv[], const char * separator)
 		{
 			if (separator == nullptr || separator[0] == '\0')

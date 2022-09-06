@@ -56,10 +56,10 @@ namespace tinyToolkit
 			 *
 			 * 激活
 			 *
-			 * @param content 内容
+			 * @param value 数值
 			 *
 			 */
-			void Activate(const std::string & content);
+			void Activate(const std::string & value);
 
 			/**
 			 *
@@ -90,27 +90,27 @@ namespace tinyToolkit
 
 			/**
 			 *
-			 * 名称
+			 * 全长名称
 			 *
-			 * @return 名称
+			 * @return 全长名称
 			 *
 			 */
 			const std::string & LongName() const;
 
 			/**
 			 *
-			 * 名称
+			 * 缩略名称
 			 *
-			 * @return 名称
+			 * @return 缩略名称
 			 *
 			 */
 			const std::string & ShortName() const;
 
 			/**
 			 *
-			 * 名称
+			 * 选项名称
 			 *
-			 * @return 名称
+			 * @return 选项名称
 			 *
 			 */
 			const std::string & OptionName() const;

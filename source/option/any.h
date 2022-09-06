@@ -56,7 +56,7 @@ namespace tinyToolkit
 			};
 
 			template <typename ValueType>
-			class TOOLKIT_API Storage : public IStorage
+			class TOOLKIT_API Storage final : public IStorage
 			{
 			public:
 				/**
