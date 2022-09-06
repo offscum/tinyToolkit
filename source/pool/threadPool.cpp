@@ -62,11 +62,11 @@ namespace tinyToolkit
 
 		#elif TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_APPLE
 
-			return pthread_setname_np(name.c_str()) == 0;
+			return ::pthread_setname_np(name.c_str()) == 0;
 
 		#else
 
-			return prctl(PR_SET_NAME, name.c_str()) == 0;
+			return ::prctl(PR_SET_NAME, name.c_str()) == 0;
 
 		#endif
 		}
