@@ -128,7 +128,7 @@ namespace tinyToolkit
 			std::tm utc{ };
 			std::tm local{ };
 
-			int64_t timestamp{ 12 * 3600 }; /// 伦敦中午12点整, 全世界都在同一天
+			int64_t timestamp = 12 * 3600; /// 伦敦中午12点整, 全世界都在同一天
 
 			::gmtime_s(&utc, reinterpret_cast<std::time_t *>(&timestamp));
 

@@ -198,15 +198,13 @@ namespace tinyToolkit
 		 */
 		static inline std::string ResolveSymbol(const std::string & symbol)
 		{
-			std::size_t pos = 0;
-			std::size_t head;
-			std::size_t tail;
+			std::size_t pos{ 0 };
 
 			std::string content{ };
 
 			while (pos < symbol.length())
 			{
-				head = symbol.find("_Z", pos);
+				auto head = symbol.find("_Z", pos);
 
 				if (head == std::string::npos)
 				{
@@ -215,14 +213,14 @@ namespace tinyToolkit
 					break;
 				}
 
-				tail = symbol.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_", head);
+				auto tail = symbol.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_", head);
 
 				if (tail == std::string::npos)
 				{
 					tail = symbol.length();
 				}
 
-				int32_t status = 0;
+				int32_t status{ 0 };
 
 				std::unique_ptr<char, void(*)(void *)> link
 				{
