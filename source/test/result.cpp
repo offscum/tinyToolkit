@@ -53,7 +53,7 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 对象转换
+		 * 重载bool类型转换
 		 *
 		 * @return 转换结果
 		 *

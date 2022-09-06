@@ -144,15 +144,18 @@ namespace tinyToolkit
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
 			if (::_stricmp(actualValue, expectedValue) == 0)
+			{
+				return Result(true);
+			}
 
 		#else
 
 			if (::strcasecmp(actualValue, expectedValue) == 0)
-
-		#endif
 			{
 				return Result(true);
 			}
+
+		#endif
 
 			return Result(false)
 				<< "Value of: " << actualExpression << TOOLKIT_LINE_EOL
@@ -195,15 +198,18 @@ namespace tinyToolkit
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
 			if (::_stricmp(actualValue, expectedValue) != 0)
+			{
+				return Result(true);
+			}
 
 		#else
 
 			if (::strcasecmp(actualValue, expectedValue) != 0)
-
-		#endif
 			{
 				return Result(true);
 			}
+
+		#endif
 
 			return Result(false)
 				<< "Value of: " << actualExpression << TOOLKIT_LINE_EOL

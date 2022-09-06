@@ -52,7 +52,7 @@ namespace tinyToolkit
 			 * @param caseName 实例名称
 			 * @param testName 任务名称
 			 *
-			 * @return 任务组
+			 * @return 实例
 			 *
 			 */
 			template <typename TestType>
@@ -81,6 +81,8 @@ namespace tinyToolkit
 			/**
 			 *
 			 * 运行
+			 *
+			 * @return 结果
 			 *
 			 */
 			int32_t Run();
@@ -135,6 +137,8 @@ namespace tinyToolkit
 		 *
 		 * @param caseName 实例名称
 		 * @param testName 任务名称
+		 *
+		 * @return 实例
 		 *
 		 */
 		template <typename TestType>

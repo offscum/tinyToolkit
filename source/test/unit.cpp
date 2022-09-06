@@ -8,6 +8,7 @@
 
 
 #include "unit.h"
+#include "util.h"
 #include "console.h"
 
 
@@ -33,6 +34,8 @@ namespace tinyToolkit
 		 *
 		 * 运行
 		 *
+		 * @return 结果
+		 *
 		 */
 		int32_t Unit::Run()
 		{
@@ -56,7 +59,7 @@ namespace tinyToolkit
 				environment->SetUp();
 			}
 
-			int64_t elapsed = 0;
+			int64_t elapsed{ 0 };
 
 			std::vector<std::string> failedList{ };
 			std::vector<std::string> passedList{ };
@@ -79,8 +82,9 @@ namespace tinyToolkit
 					<< (iter->Count() > 1 ? " tests" : " test")
 					<< " from "
 					<< iter->Name()
-					<< " (" << iter->Elapsed()
-					<< " ms total)"
+					<< " ("
+					<< ElapsedTime(iter->Elapsed())
+					<< " total)"
 					<< TOOLKIT_LINE_EOL
 					<< TOOLKIT_LINE_EOL);
 
@@ -110,8 +114,8 @@ namespace tinyToolkit
 				<< " test "
 				<< (_cases.size() > 1 ? "cases" : "case")
 				<< " ran ("
-				<< elapsed
-				<< " ms total)"
+				<< ElapsedTime(elapsed)
+				<< " total)"
 				<< TOOLKIT_LINE_EOL);
 
 			Console::Instance().Info(Message()

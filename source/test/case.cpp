@@ -8,6 +8,7 @@
 
 
 #include "case.h"
+#include "util.h"
 #include "console.h"
 
 #include <chrono>
@@ -45,11 +46,11 @@ namespace tinyToolkit
 					<< test->Name()
 					<< TOOLKIT_LINE_EOL);
 
-				auto head = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+				auto head = Timestamp();
 
 				test->Run();
 
-				auto used = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() - head;
+				auto used = Timestamp() - head;
 
 				_elapsed += used;
 
@@ -63,8 +64,8 @@ namespace tinyToolkit
 						<< "."
 						<< test->Name()
 						<< " ("
-						<< used
-						<< " ms)"
+						<< ElapsedTime(used)
+						<< ")"
 						<< TOOLKIT_LINE_EOL);
 				}
 				else
@@ -77,8 +78,8 @@ namespace tinyToolkit
 						<< "."
 						<< test->Name()
 						<< " ("
-						<< used
-						<< " ms)"
+						<< ElapsedTime(used)
+						<< ")"
 						<< TOOLKIT_LINE_EOL);
 				}
 
