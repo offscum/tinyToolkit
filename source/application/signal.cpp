@@ -19,17 +19,13 @@ namespace tinyToolkit
 		 * 注册忽略信号动作
 		 *
 		 */
-		void RegisterIgnoreSignal(void(* callback)(int32_t))
+		void RegisterIgnoreSignal()
 		{
-		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
+		#if TOOLKIT_PLATFORM_TYPE != TOOLKIT_PLATFORM_WINDOWS
 
-			TOOLKIT_UNUSED(callback);
-
-		#else
-
-			RegisterSignalAction(SIGHUP, callback);
-			RegisterSignalAction(SIGPIPE, callback);
-			RegisterSignalAction(SIGCHLD, callback);
+			RegisterSignalAction(SIGHUP, SIG_IGN);
+			RegisterSignalAction(SIGPIPE, SIG_IGN);
+			RegisterSignalAction(SIGCHLD, SIG_IGN);
 
 		#endif
 		}
@@ -47,6 +43,12 @@ namespace tinyToolkit
 			RegisterSignalAction(SIGFPE, callback);
 			RegisterSignalAction(SIGABRT, callback);
 			RegisterSignalAction(SIGSEGV, callback);
+
+		#if TOOLKIT_PLATFORM_TYPE != TOOLKIT_PLATFORM_WINDOWS
+
+			RegisterSignalAction(SIGBUS, callback);
+
+		#endif
 		}
 
 		/**
@@ -101,6 +103,12 @@ namespace tinyToolkit
 			UnregisterSignalAction(SIGFPE);
 			UnregisterSignalAction(SIGABRT);
 			UnregisterSignalAction(SIGSEGV);
+
+		#if TOOLKIT_PLATFORM_TYPE != TOOLKIT_PLATFORM_WINDOWS
+
+			UnregisterSignalAction(SIGBUS);
+
+		#endif
 		}
 
 		/**
@@ -124,20 +132,6 @@ namespace tinyToolkit
 			UnregisterSignalAction(SIGTSTP);
 
 		#endif
-		}
-
-		/**
-		 *
-		 * 向自身发送信号
-		 *
-		 * @param sig 信号
-		 *
-		 * @return 是否发送成功
-		 *
-		 */
-		bool Raise(int32_t sig)
-		{
-			return std::raise(sig) == 0;
 		}
 
 		/**

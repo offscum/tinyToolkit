@@ -28,7 +28,7 @@ namespace tinyToolkit
 		 * 注册忽略信号动作
 		 *
 		 */
-		TOOLKIT_API void RegisterIgnoreSignal(void(* callback)(int32_t) = SIG_IGN);
+		TOOLKIT_API void RegisterIgnoreSignal();
 
 		/**
 		 *
@@ -68,17 +68,6 @@ namespace tinyToolkit
 		 *
 		 */
 		TOOLKIT_API void UnregisterTerminateSignal();
-
-		/**
-		 *
-		 * 向自身发送信号
-		 *
-		 * @param sig 信号
-		 *
-		 * @return 是否发送成功
-		 *
-		 */
-		TOOLKIT_API bool Raise(int32_t sig);
 
 		/**
 		 *

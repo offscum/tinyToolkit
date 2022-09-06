@@ -364,26 +364,23 @@ namespace tinyToolkit
 		 */
 		uint64_t ThreadID()
 		{
-			static thread_local uint64_t tid = 0;
+		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-			if (tid == 0)
-			{
-			#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
+			return static_cast<uint64_t>(::GetCurrentThreadId());
 
-				tid = static_cast<uint64_t>(::GetCurrentThreadId());
+		#elif TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_APPLE
 
-			#elif TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_APPLE
+			uint64_t tid{ 0 };
 
-				::pthread_threadid_np(nullptr, &tid);
-
-			#else
-
-				tid = static_cast<uint64_t>(::syscall(SYS_gettid));
-
-			#endif
-			}
+			::pthread_threadid_np(nullptr, &tid);
 
 			return tid;
+
+		#else
+
+			return static_cast<uint64_t>(::syscall(SYS_gettid));
+
+		#endif
 		}
 
 		/**
