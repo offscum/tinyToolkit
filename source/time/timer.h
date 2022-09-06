@@ -75,10 +75,10 @@ namespace tinyToolkit
 
 			/**
 			 *
-			 * 清空
+			 * 关闭
 			 *
 			 */
-			void Clear();
+			void Close();
 
 			/**
 			 *

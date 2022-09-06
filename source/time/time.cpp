@@ -86,7 +86,7 @@ namespace tinyToolkit
 			std::tm utc{ };
 			std::tm local{ };
 
-			int64_t timestamp{ 12 * 3600 }; /// 伦敦中午12点整, 全世界都在同一天
+			int64_t timestamp = 12 * 3600; /// 伦敦中午12点整, 全世界都在同一天
 
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
@@ -212,7 +212,7 @@ namespace tinyToolkit
 		 *
 		 * 转换为秒数时间戳
 		 *
-		 * @param date 日期
+		 * @param date 日期时间
 		 * @param format 格式
 		 *
 		 * @return 秒数时间戳

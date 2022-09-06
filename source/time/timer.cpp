@@ -69,7 +69,7 @@ namespace tinyToolkit
 		 */
 		Timer::~Timer()
 		{
-			Clear();
+			Close();
 		}
 
 		/**
@@ -133,7 +133,7 @@ namespace tinyToolkit
 		 * 清空
 		 *
 		 */
-		void Timer::Clear()
+		void Timer::Close()
 		{
 			for (auto & spoke : _rootWheel)
 			{

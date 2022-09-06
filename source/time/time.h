@@ -128,7 +128,7 @@ namespace tinyToolkit
 		 *
 		 * 转换为秒数时间戳
 		 *
-		 * @param date 日期
+		 * @param date 日期时间
 		 * @param format 格式
 		 *
 		 * @return 秒数时间戳
