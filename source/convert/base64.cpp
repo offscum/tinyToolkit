@@ -33,7 +33,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return Base64Encode(content, ::strlen(content));
+			return Base64Encode(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -71,7 +71,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return Base64Encode(content, content.length());
+			return Base64Encode(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -111,7 +111,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			static char EncodeTable[64] =
+			static char EncodeTable[64]
 			{
 				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 				'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -173,7 +173,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return Base64Encode(content.c_str(), length);
+			return Base64Encode(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 
 		/**
@@ -192,7 +192,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return Base64Decode(content, ::strlen(content));
+			return Base64Decode(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -230,7 +230,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return Base64Decode(content, content.length());
+			return Base64Decode(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -270,7 +270,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			static char DecodeTable[256] =
+			static char DecodeTable[256]
 			{
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -292,7 +292,7 @@ namespace tinyToolkit
 
 			char ch;
 
-			int32_t bin = 0;
+			int32_t bin{ 0 };
 
 			std::size_t i{ 0 };
 
@@ -300,7 +300,7 @@ namespace tinyToolkit
 
 			while ((ch = static_cast<char>(*content++)) != '\0' && i <= length)
 			{
-				std::size_t pos = i % 4;
+				auto pos = i % 4;
 
 				if (ch == '=')
 				{
@@ -397,7 +397,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return Base64Decode(content.c_str(), length);
+			return Base64Decode(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 	}
 }

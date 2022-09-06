@@ -32,7 +32,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return UrlEncode(content, ::strlen(content));
+			return UrlEncode(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -70,7 +70,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return UrlEncode(content, content.length());
+			return UrlEncode(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -114,7 +114,7 @@ namespace tinyToolkit
 
 			for (std::size_t i = 0; i < length; ++i)
 			{
-				uint8_t byte = content[i];
+				auto byte = content[i];
 
 				if (byte == ' ')
 				{
@@ -158,7 +158,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return UrlEncode(content.c_str(), length);
+			return UrlEncode(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 
 		/**
@@ -177,7 +177,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return UrlDecode(content, ::strlen(content));
+			return UrlDecode(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -215,7 +215,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return UrlDecode(content, content.length());
+			return UrlDecode(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -301,7 +301,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			return UrlDecode(content.c_str(), length);
+			return UrlDecode(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 	}
 }
