@@ -59,11 +59,11 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 磁盘已用大小
+		 * 磁盘使用大小
 		 *
 		 * @param disk 磁盘
 		 *
-		 * @return 磁盘已用大小
+		 * @return 磁盘使用大小
 		 *
 		 */
 		TOOLKIT_API int64_t DiskUsedSize(const char * disk);

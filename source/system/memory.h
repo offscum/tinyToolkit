@@ -54,9 +54,9 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 内存已用大小
+		 * 内存使用大小
 		 *
-		 * @return 内存已用大小
+		 * @return 内存使用大小
 		 *
 		 */
 		TOOLKIT_API int64_t MemoryUsedSize();

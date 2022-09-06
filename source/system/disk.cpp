@@ -41,6 +41,11 @@ namespace tinyToolkit
 		 */
 		bool DiskSpace(const char * disk, int64_t * total, int64_t * free)
 		{
+			if (disk == nullptr)
+			{
+				return false;
+			}
+
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
 			ULARGE_INTEGER freeBytes{ 0 };
@@ -172,11 +177,11 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 磁盘已用大小
+		 * 磁盘使用大小
 		 *
 		 * @param disk 磁盘
 		 *
-		 * @return 磁盘已用大小
+		 * @return 磁盘使用大小
 		 *
 		 */
 		int64_t DiskUsedSize(const char * disk)
