@@ -195,9 +195,9 @@ namespace tinyToolkit
 			static void Initialization(Context & context);
 
 		protected:
-			SHA1 _sha1{ };
-
 			bool _isComputed{ false };
+
+			SHA1 _sha1{ };
 
 			uint8_t _digest[DIGEST_SIZE]{ 0 };
 

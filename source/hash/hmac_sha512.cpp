@@ -27,7 +27,7 @@ namespace tinyToolkit
 		 */
 		HMAC_SHA512::HMAC_SHA512()
 		{
-			Reset();
+			Initialization(_context);
 		}
 
 		/**
@@ -42,12 +42,12 @@ namespace tinyToolkit
 			::memset(reinterpret_cast<void *>(_digest), 0, sizeof(_digest));
 			::memset(reinterpret_cast<void *>(&_context), 0, sizeof(_context));
 
+			_sha512.Reset();
+
 			_result.clear();
 			_result.shrink_to_fit();
 
 			Initialization(_context);
-
-			_sha512.Reset();
 		}
 
 		/**
@@ -64,7 +64,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			SetKey(key, ::strlen(key));
+			SetKey(reinterpret_cast<const uint8_t *>(key), ::strlen(key));
 		}
 
 		/**
@@ -98,7 +98,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			SetKey(key, key.length());
+			SetKey(reinterpret_cast<const uint8_t *>(key.c_str()), key.length());
 		}
 
 		/**
@@ -176,7 +176,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			SetKey(key.c_str(), length);
+			SetKey(reinterpret_cast<const uint8_t *>(key.c_str()), length);
 		}
 
 		/**
@@ -193,7 +193,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, ::strlen(content));
+			Append(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -227,7 +227,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, content.length());
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -283,7 +283,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content.c_str(), length);
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 
 		/**
@@ -338,7 +338,7 @@ namespace tinyToolkit
 			_result.clear();
 			_result.shrink_to_fit();
 
-			static char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+			static char Hex[16]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 			for (auto & iter : _digest)
 			{

@@ -62,7 +62,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, ::strlen(content));
+			Append(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -96,7 +96,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, content.length());
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -152,7 +152,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content.c_str(), length);
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 
 		/**
@@ -206,7 +206,7 @@ namespace tinyToolkit
 			_result.clear();
 			_result.shrink_to_fit();
 
-			static char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+			static char Hex[16]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 			for (auto & iter : _digest)
 			{
@@ -330,7 +330,7 @@ namespace tinyToolkit
 						+ SHA224_F3(Y[(i) - 15]) + Y[(i) - 16];		\
 			}
 
-			static uint32_t SHA224_KEY[64] =
+			static uint32_t SHA224_KEY[64]
 			{
 				0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
 				0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5,

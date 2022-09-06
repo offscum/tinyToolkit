@@ -197,9 +197,9 @@ namespace tinyToolkit
 		private:
 			bool _isComputed{ false };
 
-			uint8_t _digest[DIGEST_SIZE]{ 0 };
-
 			SHA256 _sha256{ };
+
+			uint8_t _digest[DIGEST_SIZE]{ 0 };
 
 			Context _context{ };
 

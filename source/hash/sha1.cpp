@@ -62,7 +62,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, ::strlen(content));
+			Append(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -96,7 +96,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, content.length());
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -152,7 +152,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content.c_str(), length);
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 
 		/**
@@ -206,7 +206,7 @@ namespace tinyToolkit
 			_result.clear();
 			_result.shrink_to_fit();
 
-			static char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+			static char Hex[16]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 			for (auto & iter : _digest)
 			{
@@ -327,7 +327,7 @@ namespace tinyToolkit
 		 */
 		void SHA1::Transform(Context & context)
 		{
-			static uint32_t SHA1_KEY[4] = { 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6 };
+			static uint32_t SHA1_KEY[4]{ 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6 };
 
 			#define CIRCULAR_SHIFT(bits, word) (((word) << (bits)) | ((word) >> (32 - (bits))))
 

@@ -62,7 +62,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, ::strlen(content));
+			Append(reinterpret_cast<const uint8_t *>(content), ::strlen(content));
 		}
 
 		/**
@@ -96,7 +96,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content, content.length());
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), content.length());
 		}
 
 		/**
@@ -152,7 +152,7 @@ namespace tinyToolkit
 				return;
 			}
 
-			Append(content.c_str(), length);
+			Append(reinterpret_cast<const uint8_t *>(content.c_str()), length);
 		}
 
 		/**
@@ -206,7 +206,7 @@ namespace tinyToolkit
 			_result.clear();
 			_result.shrink_to_fit();
 
-			static char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+			static char Hex[16]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 			for (auto & iter : _digest)
 			{
@@ -225,7 +225,7 @@ namespace tinyToolkit
 		 */
 		void MD5::Final(Context & context, uint8_t * digest)
 		{
-			static uint8_t PadTable[64] =
+			static uint8_t PadTable[64]
 			{
 				0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -239,8 +239,8 @@ namespace tinyToolkit
 
 			static auto Encode = [](const uint32_t * input, uint8_t * output, std::size_t length)
 			{
-				std::size_t i = 0;
-				std::size_t j = 0;
+				std::size_t i{ 0 };
+				std::size_t j{ 0 };
 
 				while (j < length)
 				{
@@ -278,7 +278,7 @@ namespace tinyToolkit
 		 */
 		void MD5::Update(Context & context, const uint8_t * content, std::size_t length)
 		{
-			std::size_t i = 0;
+			std::size_t i{ 0 };
 			std::size_t index = (context.count[0] >> 3) & 0x3F;
 			std::size_t fill = 64 - index;
 
@@ -323,8 +323,8 @@ namespace tinyToolkit
 
 			static auto Decode = [](const uint8_t * input, uint32_t * output, std::size_t length)
 			{
-				std::size_t i = 0;
-				std::size_t j = 0;
+				std::size_t i{ 0 };
+				std::size_t j{ 0 };
 
 				while (j < length)
 				{
