@@ -18,13 +18,29 @@ namespace tinyToolkit
 	{
 		/**
 		 *
+		 * 时间戳
+		 *
+		 * @return 时间戳
+		 *
+		 */
+		static inline int64_t Timestamp()
+		{
+			return static_cast<int64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		/**
+		 *
 		 * 构造函数
 		 *
 		 */
 		Unique::Unique()
 		{
 			_context.key.count = 0;
-			_context.key.timestamp = static_cast<uint32_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+			_context.key.timestamp = static_cast<uint32_t>(Timestamp());
 		}
 
 		/**
@@ -36,7 +52,7 @@ namespace tinyToolkit
 		 */
 		uint64_t Unique::Generate()
 		{
-			auto timestamp = static_cast<uint32_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+			auto timestamp = static_cast<uint32_t>(Timestamp());
 
 			if (timestamp == _context.key.timestamp)
 			{

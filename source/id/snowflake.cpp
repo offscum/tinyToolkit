@@ -30,6 +30,26 @@ namespace tinyToolkit
 		const int32_t Snowflake::DEVICE_ID_SHIFT;
 		const int32_t Snowflake::TIMESTAMP_ID_SHIFT;
 
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		/**
+		 *
+		 * 时间戳
+		 *
+		 * @return 时间戳
+		 *
+		 */
+		static inline int64_t Timestamp()
+		{
+			return static_cast<int64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 		/**
 		 *
 		 * 构造函数
@@ -41,8 +61,8 @@ namespace tinyToolkit
 		Snowflake::Snowflake(int64_t user, int64_t device) : _user(user),
 															 _device(device)
 		{
-			_baseTimestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-			_lastTimestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+			_baseTimestamp = Timestamp();
+			_lastTimestamp = Timestamp();
 
 			if (_user < 0 || _user > USER_ID_MAX)
 			{
@@ -64,7 +84,7 @@ namespace tinyToolkit
 		 */
 		uint64_t Snowflake::Generate()
 		{
-			int64_t timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+			int64_t timestamp = Timestamp();
 
 			if (timestamp < _lastTimestamp)
 			{
@@ -73,11 +93,11 @@ namespace tinyToolkit
 
 			static auto NextMilliseconds = [](int64_t threshold) -> int64_t
 			{
-				int64_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+				int64_t milliseconds = Timestamp();
 
 				while (milliseconds <= threshold)
 				{
-					milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+					milliseconds = Timestamp();
 				}
 
 				return milliseconds;
