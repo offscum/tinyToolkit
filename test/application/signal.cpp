@@ -20,9 +20,9 @@ TOOLKIT_TEST_CASE(Signal, RegisterIgnoreSignal)
 
 #else
 
-	tinyToolkit::application::Raise(SIGHUP);
-	tinyToolkit::application::Raise(SIGPIPE);
-	tinyToolkit::application::Raise(SIGCHLD);
+	std::raise(SIGHUP);
+	std::raise(SIGPIPE);
+	std::raise(SIGCHLD);
 
 #endif
 }
@@ -35,19 +35,19 @@ TOOLKIT_TEST_CASE(Signal, RegisterExceptionSignal)
 
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-	tinyToolkit::application::Raise(SIGILL);
-	tinyToolkit::application::Raise(SIGFPE);
-	tinyToolkit::application::Raise(SIGABRT);
-	tinyToolkit::application::Raise(SIGSEGV);
+	std::raise(SIGILL);
+	std::raise(SIGFPE);
+	std::raise(SIGABRT);
+	std::raise(SIGSEGV);
 
 	TOOLKIT_EXPECT_EQ(count, 4);
 
 #else
 
-	tinyToolkit::application::Raise(SIGILL);
-	tinyToolkit::application::Raise(SIGFPE);
-	tinyToolkit::application::Raise(SIGABRT);
-	tinyToolkit::application::Raise(SIGSEGV);
+	std::raise(SIGILL);
+	std::raise(SIGFPE);
+	std::raise(SIGABRT);
+	std::raise(SIGSEGV);
 
 	TOOLKIT_EXPECT_EQ(count, 4);
 
@@ -62,18 +62,18 @@ TOOLKIT_TEST_CASE(Signal, RegisterTerminateSignal)
 
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-	tinyToolkit::application::Raise(SIGINT);
-	tinyToolkit::application::Raise(SIGTERM);
-	tinyToolkit::application::Raise(SIGBREAK);
+	std::raise(SIGINT);
+	std::raise(SIGTERM);
+	std::raise(SIGBREAK);
 
 	TOOLKIT_EXPECT_EQ(count, 3);
 
 #else
 
-	tinyToolkit::application::Raise(SIGINT);
-	tinyToolkit::application::Raise(SIGQUIT); /// clion会捕获这个信号
-	tinyToolkit::application::Raise(SIGTERM);
-	tinyToolkit::application::Raise(SIGTSTP);
+	std::raise(SIGINT);
+	std::raise(SIGQUIT); /// clion会捕获这个信号
+	std::raise(SIGTERM);
+	std::raise(SIGTSTP);
 
 	TOOLKIT_EXPECT_EQ(count, 4);
 
@@ -93,11 +93,6 @@ TOOLKIT_TEST_CASE(Signal, UnregisterExceptionSignal)
 TOOLKIT_TEST_CASE(Signal, UnregisterTerminateSignal)
 {
 	tinyToolkit::application::UnregisterTerminateSignal();
-}
-
-TOOLKIT_TEST_CASE(Signal, Raise)
-{
-
 }
 
 TOOLKIT_TEST_CASE(Signal, RegisterSignalAction)
