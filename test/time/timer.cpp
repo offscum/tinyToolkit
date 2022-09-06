@@ -114,7 +114,7 @@ TOOLKIT_TEST_CASE(Timer, Post_Task)
 	TOOLKIT_EXPECT_FALSE(task->IsPause());
 }
 
-TOOLKIT_TEST_CASE(Timer, Clear)
+TOOLKIT_TEST_CASE(Timer, Close)
 {
 	int64_t count{ 3 };
 	int64_t remain{ 3 };
@@ -153,7 +153,7 @@ TOOLKIT_TEST_CASE(Timer, Clear)
 
 		TOOLKIT_EXPECT_FALSE(task->IsPause());
 
-		timer.Clear();
+		timer.Close();
 
 		TOOLKIT_EXPECT_EQ(task->Interval(), interval);
 		TOOLKIT_EXPECT_EQ(task->TaskCount(), count);
