@@ -86,7 +86,7 @@ namespace tinyToolkit
 		 * @param minute 分
 		 * @param second 秒
 		 *
-		 * @return 到期时间戳(秒)
+		 * @return 到期时间戳
 		 *
 		 */
 		TOOLKIT_API int64_t Expiration(int64_t day = 0, int32_t hour = 0, int32_t minute = 0, int32_t second = 0);
