@@ -16,7 +16,7 @@
  * 未使用
  *
  */
-#define TOOLKIT_UNUSED(val)		(void)val;
+#define TOOLKIT_UNUSED(val)		(void)val
 
 /**
  *
