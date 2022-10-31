@@ -7,7 +7,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0 FATAL_ERROR)
 #
 # 版本号
 #
-SET(LIBRARY_VERSION 0.0.1)
+SET(LIBRARY_VERSION 0.1.0)
 
 
 #
@@ -57,13 +57,13 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/source)
 #
 # 选项
 #
-OPTION(BUILD_TEST "Build test" ON)
+OPTION(BUILD_TESTS "Build test" ON)
 
 
 #
 # 是否编译单元测试代码
 #
-IF (BUILD_TEST)
+IF (BUILD_TESTS)
 
 	#
 	# 添加子目录
