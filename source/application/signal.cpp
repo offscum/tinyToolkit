@@ -18,14 +18,20 @@ namespace tinyToolkit
 		 *
 		 * 注册忽略信号动作
 		 *
+		 * @param callback 回调函数
+		 *
 		 */
-		void RegisterIgnoreSignal()
+		void RegisterIgnoreSignal(void(* callback)(int32_t))
 		{
-		#if TOOLKIT_PLATFORM_TYPE != TOOLKIT_PLATFORM_WINDOWS
+		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-			RegisterSignalAction(SIGHUP, SIG_IGN);
-			RegisterSignalAction(SIGPIPE, SIG_IGN);
-			RegisterSignalAction(SIGCHLD, SIG_IGN);
+            TOOLKIT_UNUSED(callback)
+
+        #else
+
+			RegisterSignalAction(SIGHUP, callback);
+			RegisterSignalAction(SIGPIPE, callback);
+			RegisterSignalAction(SIGCHLD, callback);
 
 		#endif
 		}

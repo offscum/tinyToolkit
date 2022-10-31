@@ -68,7 +68,7 @@ namespace tinyToolkit
 
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> snapshotHandle
+			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> const snapshotHandle
 			(
 				::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0),
 
@@ -133,7 +133,7 @@ namespace tinyToolkit
 
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> snapshotHandle
+			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> const snapshotHandle
 			(
 				::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0),
 
@@ -276,7 +276,7 @@ namespace tinyToolkit
 
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> processHandle
+			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> const processHandle
 			(
 				::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, static_cast<DWORD>(pid)),
 
@@ -300,7 +300,7 @@ namespace tinyToolkit
 
 		#elif TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_APPLE
 
-			mach_port_name_t task = 0;
+			mach_port_name_t task{ 0 };
 
 			if (::task_for_pid(::mach_task_self(), static_cast<int32_t>(pid), &task) != KERN_SUCCESS)
 			{

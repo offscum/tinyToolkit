@@ -27,8 +27,10 @@ namespace tinyToolkit
 		 *
 		 * 注册忽略信号动作
 		 *
+		 * @param callback 回调函数
+		 *
 		 */
-		TOOLKIT_API void RegisterIgnoreSignal();
+		TOOLKIT_API void RegisterIgnoreSignal(void(* callback)(int32_t) = SIG_IGN);
 
 		/**
 		 *
