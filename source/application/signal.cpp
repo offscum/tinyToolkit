@@ -25,7 +25,7 @@ namespace tinyToolkit
 		{
 		#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-            TOOLKIT_UNUSED(callback)
+            TOOLKIT_UNUSED(callback);
 
         #else
 
