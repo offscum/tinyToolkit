@@ -111,7 +111,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			static char EncodeTable[64]
+			static char const EncodeTable[64]
 			{
 				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 				'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -270,7 +270,7 @@ namespace tinyToolkit
 				return std::string{ };
 			}
 
-			static char DecodeTable[256]
+			static char const DecodeTable[256]
 			{
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
