@@ -35,19 +35,19 @@ TOOLKIT_TEST_CASE(Signal, RegisterExceptionSignal)
 
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-	std::raise(SIGILL);
-	std::raise(SIGFPE);
-	std::raise(SIGABRT);
-	std::raise(SIGSEGV);
+    (void)std::raise(SIGILL);
+	(void)std::raise(SIGFPE);
+	(void)std::raise(SIGABRT);
+	(void)std::raise(SIGSEGV);
 
 	TOOLKIT_EXPECT_EQ(count, 4);
 
 #else
 
-	std::raise(SIGILL);
-	std::raise(SIGFPE);
-	std::raise(SIGABRT);
-	std::raise(SIGSEGV);
+	(void)std::raise(SIGILL);
+	(void)std::raise(SIGFPE);
+	(void)std::raise(SIGABRT);
+	(void)std::raise(SIGSEGV);
 
 	TOOLKIT_EXPECT_EQ(count, 4);
 
@@ -62,18 +62,18 @@ TOOLKIT_TEST_CASE(Signal, RegisterTerminateSignal)
 
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-	std::raise(SIGINT);
-	std::raise(SIGTERM);
-	std::raise(SIGBREAK);
+	(void)std::raise(SIGINT);
+	(void)std::raise(SIGTERM);
+	(void)std::raise(SIGBREAK);
 
 	TOOLKIT_EXPECT_EQ(count, 3);
 
 #else
 
-	std::raise(SIGINT);
-	std::raise(SIGQUIT); /// clion会捕获这个信号
-	std::raise(SIGTERM);
-	std::raise(SIGTSTP);
+	(void)std::raise(SIGINT);
+	(void)std::raise(SIGQUIT); /// clion会捕获这个信号
+	(void)std::raise(SIGTERM);
+	(void)std::raise(SIGTSTP);
 
 	TOOLKIT_EXPECT_EQ(count, 4);
 
