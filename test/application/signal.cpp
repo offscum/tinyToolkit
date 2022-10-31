@@ -31,11 +31,16 @@ TOOLKIT_TEST_CASE(Signal, RegisterExceptionSignal)
 {
 	static int32_t count{ 0 };
 
-	tinyToolkit::application::RegisterExceptionSignal([](int32_t signalNo) { TOOLKIT_UNUSED(signalNo); ++count; });
+	tinyToolkit::application::RegisterExceptionSignal([](int32_t sig)
+	{
+		TOOLKIT_UNUSED(sig);
+
+		++count;
+	});
 
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
-    (void)std::raise(SIGILL);
+	(void)std::raise(SIGILL);
 	(void)std::raise(SIGFPE);
 	(void)std::raise(SIGABRT);
 	(void)std::raise(SIGSEGV);
@@ -58,7 +63,12 @@ TOOLKIT_TEST_CASE(Signal, RegisterTerminateSignal)
 {
 	static int32_t count{ 0 };
 
-	tinyToolkit::application::RegisterTerminateSignal([](int32_t signalNo) { TOOLKIT_UNUSED(signalNo); ++count; });
+	tinyToolkit::application::RegisterTerminateSignal([](int32_t sig)
+	{
+		TOOLKIT_UNUSED(sig);
+
+		++count;
+	});
 
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 
