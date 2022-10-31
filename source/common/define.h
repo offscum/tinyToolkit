@@ -14,49 +14,24 @@
 #include "platform.h"
 
 
-#ifdef DEBUG
-#
-#  define TOOLKIT_BUILD_TYPE "DEBUG"
-#
-#else
-#
-#  define TOOLKIT_BUILD_TYPE "RELEASE"
-#
-#endif
-
-
+/**
+ *
+ * 定义
+ *
+ */
 #if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 #
 #  ifndef TOOLKIT_FILE
-#  define TOOLKIT_FILE		__FILE__
+#  define TOOLKIT_FILE			__FILE__
 #  endif
 #
 #  ifndef TOOLKIT_LINE
-#  define TOOLKIT_LINE		__LINE__
+#  define TOOLKIT_LINE			__LINE__
 #  endif
 #
 #  ifndef TOOLKIT_FUNC
-#  define TOOLKIT_FUNC		__FUNCSIG__
+#  define TOOLKIT_FUNC			__FUNCSIG__
 #  endif
-#
-#else
-#
-#  ifndef TOOLKIT_FILE
-#  define TOOLKIT_FILE		__FILE__
-#  endif
-#
-#  ifndef TOOLKIT_LINE
-#  define TOOLKIT_LINE		__LINE__
-#  endif
-#
-#  ifndef TOOLKIT_FUNC
-#  define TOOLKIT_FUNC		__PRETTY_FUNCTION__
-#  endif
-#
-#endif
-
-
-#if TOOLKIT_PLATFORM_TYPE == TOOLKIT_PLATFORM_WINDOWS
 #
 #  ifndef TOOLKIT_NAME_MAX
 #  define TOOLKIT_NAME_MAX		_MAX_FNAME
@@ -75,6 +50,18 @@
 #  endif
 #
 #else
+#
+#  ifndef TOOLKIT_FILE
+#  define TOOLKIT_FILE			__FILE__
+#  endif
+#
+#  ifndef TOOLKIT_LINE
+#  define TOOLKIT_LINE			__LINE__
+#  endif
+#
+#  ifndef TOOLKIT_FUNC
+#  define TOOLKIT_FUNC			__PRETTY_FUNCTION__
+#  endif
 #
 #  ifndef TOOLKIT_NAME_MAX
 #  define TOOLKIT_NAME_MAX		256

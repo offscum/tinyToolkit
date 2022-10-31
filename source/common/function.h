@@ -11,12 +11,28 @@
  */
 
 
-#define TOOLKIT_UNUSED(val)				(void)val
+/**
+ *
+ * 未使用
+ *
+ */
+#define TOOLKIT_UNUSED(val)		(void)val;
 
-#define TOOLKIT_NAME_STRING(val)		#val
-#define TOOLKIT_VALUE_STRING(val)		TOOLKIT_NAME_STRING(val)
+/**
+ *
+ * 拼接
+ *
+ */
+#define TOOLKIT_SPLICE(x, y)		TOOLKIT_DO_SPLICE(x, y)
+#define TOOLKIT_DO_SPLICE(x, y)		x##y
 
-#define TOOLKIT_VERSION_NUMBER(major, minor, patch) (((major) << 16) | ((minor) << 8) | (patch))
+/**
+ *
+ * 字符串化
+ *
+ */
+#define TOOLKIT_STRINGIFY(x)		TOOLKIT_DO_STRINGIFY(x)
+#define TOOLKIT_DO_STRINGIFY(x)		#x
 
 
 #endif // __COMMON__FUNCTION__H__

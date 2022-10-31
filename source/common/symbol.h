@@ -31,7 +31,7 @@
 #endif
 
 
-#if defined(API_IMPORT)
+#if defined(TOOLKIT_API_IMPORT)
 #
 #  define TOOLKIT_API TOOLKIT_SYMBOL_IMPORT
 #

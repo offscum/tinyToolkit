@@ -11,54 +11,66 @@
  */
 
 
+/**
+ *
+ * 平台类型
+ *
+ */
 #define TOOLKIT_PLATFORM_APPLE		1
 #define TOOLKIT_PLATFORM_LINUX		2
 #define TOOLKIT_PLATFORM_WINDOWS	3
 
-
-#if defined( APPLE ) || defined( __APPLE ) || defined( __APPLE__ )
+/**
+ *
+ * 平台识别
+ *
+ */
+#if defined(APPLE) || defined(__APPLE) || defined(__APPLE__)
 #
-#  if defined(__LP64__) || defined(_LP64)
-#
-#    define TOOLKIT_PLATFORM_BYTE 64
-#
-#  else
-#
-#    define TOOLKIT_PLATFORM_BYTE 32
-#
-#  endif
-#
+#  ifndef TOOLKIT_PLATFORM_TYPE
 #  define TOOLKIT_PLATFORM_TYPE TOOLKIT_PLATFORM_APPLE
-#
-#elif defined( __linux__ )
-#
-#  if defined(__LP64__) || defined(_LP64)
-#
-#    define TOOLKIT_PLATFORM_BYTE 64
-#
-#  else
-#
-#    define TOOLKIT_PLATFORM_BYTE 32
-#
 #  endif
 #
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+#
+#  ifndef TOOLKIT_PLATFORM_TYPE
 #  define TOOLKIT_PLATFORM_TYPE TOOLKIT_PLATFORM_LINUX
+#  endif
 #
-#elif defined( WIN64 ) || defined( _WIN64 ) || defined( __WIN64 ) || defined( _WIN64_ ) || defined( __WIN64__ )
+#elif defined(WIN64) || defined(_WIN64) || defined(__WIN64) || defined(_WIN64_) || defined(__WIN64__)
 #
-#  define TOOLKIT_PLATFORM_BYTE 64
-#
+#  ifndef TOOLKIT_PLATFORM_TYPE
 #  define TOOLKIT_PLATFORM_TYPE TOOLKIT_PLATFORM_WINDOWS
+#  endif
 #
-#elif defined( WIN32 ) || defined( _WIN32 ) || defined( __WIN32 ) || defined( _WIN32_ ) || defined( __WIN32__ )
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(_WIN32_) || defined(__WIN32__)
 #
-#  define TOOLKIT_PLATFORM_BYTE 32
-#
+#  ifndef TOOLKIT_PLATFORM_TYPE
 #  define TOOLKIT_PLATFORM_TYPE TOOLKIT_PLATFORM_WINDOWS
+#  endif
 #
 #else
 #
 #  error "platform not supported"
+#
+#endif
+
+/**
+ *
+ * 位数识别
+ *
+ */
+#if defined(_LP64) || defined(__LP64__) || defined(WIN64) || defined(_WIN64) || defined(__WIN64) || defined(_WIN64_) || defined(__WIN64__)
+#
+#  ifndef TOOLKIT_PLATFORM_BYTE
+#  define TOOLKIT_PLATFORM_BYTE 64
+#  endif
+#
+#else
+#
+#  ifndef TOOLKIT_PLATFORM_BYTE
+#  define TOOLKIT_PLATFORM_BYTE 32
+#  endif
 #
 #endif
 
