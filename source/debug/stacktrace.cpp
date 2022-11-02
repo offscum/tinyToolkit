@@ -39,33 +39,27 @@ namespace tinyToolkit
 
 		/**
 		 *
-		 * 格式化符号
+		 * 格式化
 		 *
-		 * @param content 内容
 		 * @param format 格式
 		 * @param args 参数
 		 *
+		 * @return 内容
+		 *
 		 */
 		template <typename ... Args>
-		static inline void WINAPI FormatSymbol(std::string & content, const char * format, Args &&... args)
+		static inline std::string WINAPI Format(const char * format, Args &&... args)
 		{
-			char buffer[MAX_SYM_NAME + 1]{ 0 };
+			char buffer[MAX_SYM_NAME + 32 + 1]{ 0 };
 
 			auto len = ::snprintf(buffer, sizeof(buffer) - 1, format, std::forward<Args>(args)...);
 
-			if (len < 0)
+			if (len <= 0)
 			{
-				len = 0;
-			}
-			else if (len > MAX_SYM_NAME)
-			{
-				len = MAX_SYM_NAME;
+				return std::string{ };
 			}
 
-			buffer[len] = '\0';
-
-			content.append(buffer, static_cast<std::size_t>(len));
-			content.append(TOOLKIT_LINE_EOL);
+			return std::string{ buffer, static_cast<std::string::size_type>(len <= sizeof(buffer) ? len : sizeof(buffer)) };
 		}
 
 		/**
@@ -73,10 +67,11 @@ namespace tinyToolkit
 		 * 解析符号
 		 *
 		 * @param handle 句柄
-		 * @param content 内容
+		 *
+		 * @return 内容
 		 *
 		 */
-		static inline void WINAPI ResolveSymbol(HANDLE handle, std::string & content)
+		static inline std::string WINAPI ResolveSymbol(HANDLE handle)
 		{
 			CONTEXT context{ 0 };
 
@@ -90,7 +85,7 @@ namespace tinyToolkit
 
 		#ifdef _M_IX86
 
-			DWORD machineType = IMAGE_FILE_MACHINE_I386;
+			const DWORD machineType = IMAGE_FILE_MACHINE_I386;
 
 			stackFrame.AddrPC.Offset = context.Eip;
 			stackFrame.AddrPC.Mode = AddrModeFlat;
@@ -101,7 +96,7 @@ namespace tinyToolkit
 
 		#elif _M_X64
 
-			DWORD machineType = IMAGE_FILE_MACHINE_AMD64;
+			const DWORD machineType = IMAGE_FILE_MACHINE_AMD64;
 
 			stackFrame.AddrPC.Offset = context.Rip;
 			stackFrame.AddrPC.Mode = AddrModeFlat;
@@ -112,7 +107,7 @@ namespace tinyToolkit
 
 		#elif _M_IA64
 
-			DWORD machineType = IMAGE_FILE_MACHINE_IA64;
+			const DWORD machineType = IMAGE_FILE_MACHINE_IA64;
 
 			stackFrame.AddrPC.Offset = context.StIIP;
 			stackFrame.AddrPC.Mode = AddrModeFlat;
@@ -139,19 +134,16 @@ namespace tinyToolkit
 
 			imageModule.SizeOfStruct = sizeof(imageModule);
 
-			auto imageSymbol = (IMAGEHLP_SYMBOL64 *)::malloc(sizeof(IMAGEHLP_SYMBOL64) + MAX_SYM_NAME);
+			IMAGEHLP_SYMBOL64_PACKAGE imagePackage{ };
 
-			if (imageSymbol == nullptr)
-			{
-				return;
-			}
+			::memset(&imagePackage, 0, sizeof(imagePackage));
 
-			::memset(imageSymbol, 0, sizeof(*imageSymbol));
-
-			imageSymbol->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL64);
-			imageSymbol->MaxNameLength = MAX_SYM_NAME;
+			imagePackage.sym.SizeOfStruct = sizeof(IMAGEHLP_SYMBOL64);
+			imagePackage.sym.MaxNameLength = MAX_SYM_NAME;
 
 			auto threadHandle = ::GetCurrentThread();
+
+			std::string content{ };
 
 			while (true)
 			{
@@ -168,21 +160,35 @@ namespace tinyToolkit
 				DWORD displacementLine{ 0 };
 				DWORD64 displacementSymbol{ 0 };
 
-				auto lineRet = ::SymGetLineFromAddr64(handle, stackFrame.AddrPC.Offset, &displacementLine, &imageLine);
-				auto moduleRet = ::SymGetModuleInfo64(handle, stackFrame.AddrPC.Offset, &imageModule);
-				auto symbolRet = ::SymGetSymFromAddr64(handle, stackFrame.AddrPC.Offset, &displacementSymbol, imageSymbol);
+				auto hasLine = ::SymGetLineFromAddr64(handle, stackFrame.AddrPC.Offset, &displacementLine, &imageLine);
+				auto hasModule = ::SymGetModuleInfo64(handle, stackFrame.AddrPC.Offset, &imageModule);
+				auto hasSymbol = ::SymGetSymFromAddr64(handle, stackFrame.AddrPC.Offset, &displacementSymbol, &imagePackage.sym);
 
-				if (lineRet)
+				if (hasLine)
 				{
-					FormatSymbol(content, "    at %s:%ld(%s) [%s 0x%llx]", imageLine.FileName, imageLine.LineNumber, symbolRet ? imageSymbol->Name : "function-name not available", moduleRet ? imageModule.ModuleName : "(module-name not available)", "(filename not available)", imageSymbol->Address);
+					content += Format
+					(
+						"    at %s:%ld(%s) [%s 0x%llx]\r\n",
+						imageLine.FileName,
+						imageLine.LineNumber,
+						hasSymbol ? imagePackage.sym.Name : "N/A",
+						hasModule ? imageModule.ModuleName : "N/A",
+						imagePackage.sym.Address
+					);
 				}
 				else
 				{
-					FormatSymbol(content, "    at %s(%s) [%s %s]", "(filename not available)", symbolRet ? imageSymbol->Name : "(function-name not available)", moduleRet ? imageModule.ModuleName : "(module-name not available)", "(filename not available)");
+					content += Format
+					(
+						"    at %s [%s 0x%llx]\r\n",
+						hasSymbol ? imagePackage.sym.Name : "N/A",
+						hasModule ? imageModule.ModuleName : "N/A",
+						imagePackage.sym.Address
+					);
 				}
 			}
 
-			::free(imageSymbol);
+			return content;
 		}
 
 	#else
@@ -282,8 +288,7 @@ namespace tinyToolkit
 			content.append(std::to_string(::GetCurrentProcessId()));
 			content.append("]:", 2);
 			content.append(TOOLKIT_LINE_EOL);
-
-			ResolveSymbol(processHandle, content);
+			content.append(ResolveSymbol(processHandle));
 
 			::SymCleanup(processHandle);
 

@@ -128,11 +128,12 @@ namespace tinyToolkit
 			std::tm utc{ };
 			std::tm local{ };
 
-			int64_t timestamp = 12 * 3600; /// 伦敦中午12点整, 全世界都在同一天
+			/// 伦敦中午12点整, 全世界都在同一天
+			auto timestamp = static_cast<int64_t>(12 * 3600);
 
-			::gmtime_s(&utc, reinterpret_cast<std::time_t *>(&timestamp));
+			::gmtime_s(&utc, reinterpret_cast<time_t *>(&timestamp));
 
-			::localtime_s(&local, reinterpret_cast<std::time_t *>(&timestamp));
+			::localtime_s(&local, reinterpret_cast<time_t *>(&timestamp));
 
 			auto timezone = static_cast<int64_t>(local.tm_hour - utc.tm_hour);
 
@@ -166,11 +167,7 @@ namespace tinyToolkit
 
 				DWORD size = ::GetModuleFileName(nullptr, name, TOOLKIT_PATH_MAX);
 
-				if (size < 0)
-				{
-					size = 0;
-				}
-				else if (size > TOOLKIT_PATH_MAX)
+				if (size > TOOLKIT_PATH_MAX)
 				{
 					size = TOOLKIT_PATH_MAX;
 				}
@@ -188,9 +185,9 @@ namespace tinyToolkit
 			{
 				std::tm now{ };
 
-				int64_t timestamp = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count() + (TimeZone() * 3600);
+				auto timestamp = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count() + (TimeZone() * 3600);
 
-				::gmtime_s(&now, &timestamp);
+				::gmtime_s(&now, reinterpret_cast<time_t *>(&timestamp));
 
 				content += std::to_string(now.tm_year + 1900);
 				content += '_';
@@ -251,7 +248,7 @@ namespace tinyToolkit
 		 */
 		static inline LONG WINAPI GenerateMiniDump(PEXCEPTION_POINTERS exception)
 		{
-			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> fileHandle
+			std::unique_ptr<typename std::remove_pointer<HANDLE>::type, std::function<void(HANDLE)>> const fileHandle
 			(
 				::CreateFile(DumpFile().c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr),
 
@@ -315,7 +312,7 @@ namespace tinyToolkit
 		 *
 		 * @param exception 异常
 		 *
-		 * @return 异常处理结果
+		 * @return 结果
 		 *
 		 */
 		static inline LONG WINAPI ExceptionFilter(LPEXCEPTION_POINTERS exception)
